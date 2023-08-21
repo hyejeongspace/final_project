@@ -223,7 +223,7 @@ use final_project;
 CREATE TABLE noticeBoard (
     bno INT AUTO_INCREMENT PRIMARY KEY,			-- 글 번호
     title VARCHAR(255) NOT NULL,				-- 글 제목
-    content TEXT NOT NULL,						-- 글 내용
+    content MEDIUMTEXT NOT NULL,				-- 글 내용
     auth VARCHAR(255) NOT NULL,					-- 작성자
     regdate DATETIME DEFAULT CURRENT_TIMESTAMP,	-- 작성 시간
     vcnt INT DEFAULT 0,							-- 조회수
@@ -233,6 +233,7 @@ CREATE TABLE noticeBoard (
 --    INDEX(IDN)								-- ID값 불러오기
 );
 
+desc noticeBoard;
 SELECT * FROM noticeBoard;
 drop table noticeBoard;
 INSERT INTO noticeBoard (title,content,auth,fixedNotice)VALUES('제목3','내용3','ADMIN',false);
