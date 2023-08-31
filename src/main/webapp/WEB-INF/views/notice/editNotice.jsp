@@ -7,9 +7,9 @@
 <div class="mainWrap">
     <h1>글 수정</h1>
     <hr/>
-    <form action="editNotice" method="post" class="editform">
+    <form action="editNotice" method="post" id="editform">
    		<%-- <input type="hidden" name="uno" value="${userInfo.uno}"/> --%>
-    	<input type="hidden" id="title" name="bno" value="${vo.bno}" required><br>
+    	<input type="hidden" id="bno" name="bno" value="${vo.bno}" required><br>
         <label for="title">제 &nbsp; 목</label>
         <input type="text" id="title" name="title" value="${vo.title}" required><br>
 		<label for="auth">작성자</label>
@@ -21,7 +21,7 @@
         <label for="fixedNoticeF" class="fixBtn"> 미고정  </label><br> 
         <!-- <label for="content">내용:</label> -->
         <textarea id="content" name="content">${vo.content}</textarea><br>
-        <input type="submit" value="작성" id="addBtn">
+        <input type="button" value="작성" id="addBtn">
 		<div>
 			<label>FILE DROP HERE</label>
 			<div class="fileDrop">
@@ -30,36 +30,31 @@
 			<div>
 				<!-- 첨부파일 목록 추가 -->
 				<ul class="uploadList">
-					<c:if test="${!empty board.files}">
-						<c:forEach var="file" items="${board.files}">
+					<c:if test="${!empty vo.files}">
+						<c:forEach var="file" items="${vo.files}">
 							<li data-src='${file}'>
 								<c:choose>
 									<c:when test="${fn:contains(file,'s_')}">
 										<!-- 이미지 파일 -->
-										<img src='${path}/displayFile?fileName=${file}'/>
+										<img class="attachmentImg" src='${path}/displayFile?fileName=${file}'/>
 										<div>
 											<a href='${path}/displayFile?fileName=${fn:replace(file,"s_","")}' target='blank'>
-											<!-- /2023/08/21/s_95e278a2fdd048f8a25fcc68352449c3_SQL Injection.jpg -->
-											<!-- /2023/08/21/95e278a2fdd048f8a25fcc68352449c3_SQL Injection.jpg -->
-											<!-- SQL Injection.jpg -->
 												${fn:substringAfter(fn:replace(file,"s_",""),'_')}
 											</a>
 										</div>
 									</c:when>
 									<c:otherwise>
 										<!-- 일반 파일 -->
-										<img src='${path}/resources/img/file.png'/>
+										<img class="attachmentImg" src='${path}/resources/images/img/file.png'/>
 										<div>
 											<a href='${path}/displayFile?fileName=${file}'>
-											<!-- /2023/08/21/95e278a2fdd048f8a25fcc68352449c3_SQL Injection.jpg -->
-											<!-- SQL Injection.jpg -->
 												${fn:substringAfter(file,'_')}
 											</a>
 										</div>
 									</c:otherwise>
 								</c:choose>
 								<div>
-									<a href="${file}" class='delBtn'>[삭제]</a>
+									<a href="${file}" class='delBtn'>[X]</a>
 								</div>
 							</li>
 						</c:forEach>
@@ -67,32 +62,15 @@
 				</ul>
 			</div>
 		</div>
+		</div>
 	</form>
 </div> 
-	<script>
-		function resizeMainWrap() {
-		    var mainWrap = document.getElementById("mainWrap");
-		    var children = mainWrap.children;
-	
-		    if (children.length >= 2) { // 적어도 두 개의 자식이 있어야 함
-		        var secondChild = children[1]; // 두 번째 자식 요소 선택
-		        var contentHeight = secondChild.scrollHeight; // 두 번째 자식 요소의 실제 높이
-		        mainWrap.style.height = contentHeight + "px";
-		    }
-		}
-	
-		// 페이지 로드 후 자동으로 크기 조절
-		window.addEventListener("load", resizeMainWrap);
-	
-		// 내부 컨텐츠가 변경될 때 크기 조절
-		window.addEventListener("resize", resizeMainWrap);
+<div class="separate"> </div>
 
-	</script>
 	<script src="https://cdn.tiny.cloud/1/txisexjqogc2o5hq1mpsl5obcf0exfbgxj0f053sshq2xiu1/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<script>
 	let plugins = ["link" ,"image"];
 	let edit_toolbar = "blocks fontfamily fontsize | link image forecolor backcolor"
-	
 	tinymce.init({
 		language : "ko_KR",
 		selector: '#content',
@@ -221,12 +199,19 @@
   		target.closest("li").remove();
   	});
   	
-  	$("#saveBtn").click(function(){
-  		/*
-  		let content = tinymce.activeEditor.getContent();
-  		console.log(content);
-  		*/
+  	$("#addBtn").on("click",function(){
+  		
   		let str = "";
+  		let title = $('#title').val();
+		let content = tinymce.activeEditor.getContent();
+		if(title.trim() == ''){
+			alert('제목을 입력하세요!');
+			return;
+		}
+		if(content.length < 1){
+			alert('내용을 입력하세요!');
+			return;
+		}
   		console.log("click");
   		let fileList = $(".uploadList .delBtn");
   		
@@ -235,49 +220,15 @@
   		$(fileList).each(function(){
   			str += "<input type='hidden' name='files' value='"+$(this).attr("href")+"'/>";
   		});
-  		$("#modifyForm").append(str);
+  		$("#editform").append(str);
   		
   		$.post(contextPath+"/deleteAllFiles",{files : arr}, function(data){
   			alert(data);
   		})
   		
-  		$("#modifyForm").submit();
+  		$("#editform").submit();
   	});
   	
   </script>	
-<!-- <script>
-	let editor;
-	
-    ClassicEditor
-        .create( document.querySelector( '#content' ) )
-        .then( newEditor => {
-        editor = newEditor;
-    } )
-	.then( editor => {
-		window.editor = editor;
-	} )
-    .catch( error => {
-           console.error( error );
-    } );
-    
-    function uploadData() {
-    
-    	const editorData = editor.getData();
-    	console.log(typeof(editorData));
-    	
-    	var xhr = new XMLHttpRequest();
-    	
-    	xhr.onreadystatechange = function() {
-    		if(xhr.readyState==4&&xhr.status==200) {
-    			
-    		}
-    	}
-    	xhr.open("post", "{path}/notice/editNotice", true);
-    	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    	xhr.send("editorData="+editorData);
-    }
-   
-
-</script> -->
 
 <jsp:include page="../common/footer.jsp" />
