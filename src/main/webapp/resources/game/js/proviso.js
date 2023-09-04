@@ -12,7 +12,7 @@ function handleDrop(event, targetId) {
     const src1 = document.getElementById("p_item1_img").src;
     const src2 = document.getElementById("p_item2_img").src;
     const target = document.getElementById(targetId).src;
-
+    
     if (target != '') {
         document.getElementById(targetId+'_img').src = '';
     }
@@ -63,14 +63,9 @@ function itemUse() {
     if(!isPaperAndLamp && !isBoxAndKey){
         itemUseFailed();
         setTimeout(() => {
-        	
             document.getElementById("itemUseFailed").style.display = "none";
-            
-            setTimeout(() => {
-                document.getElementById("p_item1_img").src = '';
-                document.getElementById("p_item2_img").src = '';
-            },90);
-
+            document.getElementById("p_item1_img").src = '';
+            document.getElementById("p_item2_img").src = '';
         }, 2000);
     }
 }
@@ -85,7 +80,7 @@ function p_click(divId) {
 
 function closeProviso() {
     if(checkDoc && checkFlashlight && checkLetter){
-        $('#p_closeTrue').toggle(200);
+        $('#p_closeTrue').show(100);
     }else{
         $('#p_closeFalse').fadeToggle(200);
     }
@@ -126,8 +121,6 @@ function flashlight(){
     function getMousePosition(e) {
        mouseX = !isTouchDevice() ? e.pageX : e.touches[0].pageX;
   	   mouseY = !isTouchDevice() ? e.pageY : e.touches[0].pageY;
-       console.log(mouseX);
-       console.log(mouseY);
        flashlight.style.setProperty("--Xpos", mouseX-270 + "px");
        flashlight.style.setProperty("--Ypos", mouseY-100 + "px");
     }	
