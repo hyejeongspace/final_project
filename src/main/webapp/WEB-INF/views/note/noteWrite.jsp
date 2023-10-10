@@ -26,8 +26,7 @@
 	</div>
 </div>
 
-<script src="https://cdn.tiny.cloud/1/"your api key"/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
+<script src="https://cdn.tiny.cloud/1/uql3k3a8pfd7n5vbtdhume962n0xs9zkl7u092u3j8xy5iqw/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 let plugins = ["link" ,"image"];
 let edit_toolbar = "blocks fontfamily fontsize"

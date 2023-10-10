@@ -3,7 +3,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <link rel="stylesheet" href="${path}/resources/game/css/chatBot.css" />
-<div id="openChatBot">도우미<br>키기</div>
+<div id="openChatBot">도우미<br>켜기</div>
 <div id="chatBotBox">
 	<div id="closeChatBot"></div>
 	<h1 style="text-align:center;">도우미입니다. 무엇이든 물어보세요</h1>

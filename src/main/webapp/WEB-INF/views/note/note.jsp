@@ -3,16 +3,41 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:include page="../common/note_header.jsp" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+function deleteCheck() {
+  var checkboxes = document.querySelectorAll('.deleteCheckBtn');
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      return true;
+    }
+  }
+  return false;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    if (deleteCheck()) {
+      alert('선택한 쪽지를 삭제합니다.');
+      document.getElementById('deleteSubmit').submit();
+    } else {
+      alert('삭제할 쪽지를 선택하세요.');
+    }
+  });
+});
+</script>
+
 <link rel="stylesheet" href="../resources/css/note.css">
 <div class="noteList">
     <h1>쪽지함</h1>
-	   <form action="${pageContext.request.contextPath}/note/delete" method="post">
+	   <form action="${pageContext.request.contextPath}/note/delete" method="post" onsubmit="return deleteCheck()" id="deleteSubmit">
+
 	   <input type="hidden" name="from_Id" value="${userInfo.id}">
 	    <c:forEach items="${notes}" var="note">
 	        <c:choose>
 	            <c:when test="${note.to_Id eq sessionScope.userInfo.id}">
 	                <div class="note checks etrans">
-	                    <input type="checkbox" name="nno" value="${note.nno}" id="check${note.nno}"  /> 
+	                    <input type="checkbox" name="nno" value="${note.nno}" id="check${note.nno}" class="deleteCheckBtn" /> 
 	                    <label for="check${note.nno}">선택</label> 
 	                    <a href="noteDetail?nno=${note.nno}">
 	                        <h2>제목 : ${note.title}</h2>
@@ -48,7 +73,7 @@
         </div>
         <hr/>
     </c:if>	    
-   		<button type="submit">선택한 쪽지 삭제</button>
+   		<button type="button" id="submitBtn">선택한 쪽지 삭제</button>
 	</form>
     
 </div>

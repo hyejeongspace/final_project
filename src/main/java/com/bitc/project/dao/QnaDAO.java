@@ -34,13 +34,13 @@ public interface QnaDAO {
 		/**
 		 * 질의 응답 수정(edit)
 		 */
-		@Update("UPDATE qna SET QuestionTitle =#{questionTitle}, QuestionContent =#{questionContent} WHERE qnaId= #{qnaId}")
+		@Update("UPDATE QnA SET QuestionTitle =#{questionTitle}, QuestionContent =#{questionContent} WHERE qnaId= #{qnaId}")
 		int updateQna(QnaVO vo)throws Exception;
 		
 		/**
 		 * qnaId로 질의응답 삭제
 		 */
-		@Delete("DELETE FROM qna WHERE QnAID = #{qndId}")
+		@Delete("DELETE FROM QnA WHERE QnAID = #{qndId}")
 		int qnaDelete(int qnaId) throws Exception;
 
 }

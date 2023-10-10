@@ -8,7 +8,7 @@
         <label for="title">제 &nbsp; 목 </label>
         <input type="text" id="title" name="title" required><br>
 		<label for="auth">작성자</label>
-        <input type="text" id="auth" name="auth" value="${userInfo.id}" required readonly><br>
+        <input type="text" id="auth" name="auth" value="${userInfo.nname}" required readonly><br>
         <label for=fixedNotice>공지 상단 고정</label><br> 
         <input type="radio" name="fixedNotice" id ="fixedNoticeT" value="true"/>&nbsp;
         <label for="fixedNoticeT" class="fixBtn"> 고정  </label>&nbsp;&nbsp;
@@ -28,7 +28,7 @@
 	</form>
 </div> 
 	
-	<script src="https://cdn.tiny.cloud/1/"your api key"/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+	<script src="https://cdn.tiny.cloud/1/uql3k3a8pfd7n5vbtdhume962n0xs9zkl7u092u3j8xy5iqw/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<script>
 	let plugins = ["link" ,"image"];
 	let edit_toolbar = "blocks fontfamily fontsize | link image forecolor backcolor"

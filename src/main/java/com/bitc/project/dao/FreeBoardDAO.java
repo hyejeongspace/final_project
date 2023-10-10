@@ -29,18 +29,18 @@ public interface FreeBoardDAO {
     @Select("SELECT count(*) FROM FreeBoard")
     int totalCount();
     
-	@Select("SELECT count(*) FROM freeBoard WHERE ${searchType} LIKE CONCAT('%',#{searchValue},'%') AND del = false")
+	@Select("SELECT count(*) FROM FreeBoard WHERE ${searchType} LIKE CONCAT('%',#{searchValue},'%') AND del = false")
 	int searchCount(SearchCriteria cri);
 
-    @Update("UPDATE freeBoard SET vcnt = vcnt + 1 WHERE bno = #{bno}")
+    @Update("UPDATE FreeBoard SET vcnt = vcnt + 1 WHERE bno = #{bno}")
     void updateCnt(int bno);
     
-    @Update("UPDATE freeBoard SET del = true WHERE bno = #{bno}")
+    @Update("UPDATE FreeBoard SET del = true WHERE bno = #{bno}")
 	int remove(int bno);
     
-    @Update("UPDATE freeBoard SET title = #{title}, content = #{content} WHERE bno = #{bno}")
+    @Update("UPDATE FreeBoard SET title = #{title}, content = #{content} WHERE bno = #{bno}")
     int modify(FreeBoardVO vo);
     
-    @Select("SELECT * FROM freeBoard WHERE ${searchType} LIKE CONCAT('%',#{searchValue},'%') AND del = false ORDER BY bno limit #{startRow},#{perPageNum}")
+    @Select("SELECT * FROM FreeBoard WHERE ${searchType} LIKE CONCAT('%',#{searchValue},'%') AND del = false ORDER BY bno limit #{startRow},#{perPageNum}")
 	List<FreeBoardVO> searchList(SearchCriteria cri);
 }

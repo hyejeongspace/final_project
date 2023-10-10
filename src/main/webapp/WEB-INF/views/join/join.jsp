@@ -46,7 +46,7 @@ function joincheck() {
     }
 }
 </script>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	window.onload = ()=>{
 		$("#submitBtn").on("click",function(){
@@ -55,11 +55,11 @@ function joincheck() {
 				day = '0'+day;
 			}
 			let date = $("#year").val() + '-' + $("#month").val().replace('월','') + '-' + day;
-			console.log(date);
 			let mail = $("#mail1").val() + $("#mail2").val();
 			$('input[name="birthdate"]').val(date);
 			$('input[name="email"]').val(mail);
-			$('form').submit();
+			$('#join_form').attr('method', 'POST');
+			$('#join_form').submit();
 		});
 		
 	   	$("#nname").on('keydown', function(e) {
@@ -99,7 +99,7 @@ function joincheck() {
 		});
 	}
 </script>
-    <form id="join_form" method="post" action="join" onsubmit="return joincheck()"> 
+    <form id="join_form" method="POST" action="join" onsubmit="return joincheck()"> 
         <div id="enter1">
             <div id="content">
                 <div class="enter2">
